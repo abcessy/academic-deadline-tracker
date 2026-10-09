@@ -1,43 +1,37 @@
-flowchart TB
-    %% Define Styles
-    classDef person fill:#08427B,stroke:#073B6F,color:#fff,stroke-width:2px,rx:5,ry:5;
-    classDef system fill:#1168BD,stroke:#0B5394,color:#fff,stroke-width:2px,rx:5,ry:5;
-    classDef external fill:#999999,stroke:#6B6B6B,color:#fff,stroke-width:2px,rx:5,ry:5;
-    classDef label fill:none,stroke:none,color:#000,font-size:12px;
+# C4 System Context Diagram — Academic Deadline Tracker
 
-    %% Nodes
-    Student["<b>Student</b><br/><i>[person]</i><br/>College student who tracks academic deadlines"]:::person
-    Instructor["<b>Instructor</b><br/><i>[person]</i><br/>Provides deadline information for subjects"]:::person
-    
-    System["<b>Academic Deadline Tracker</b><br/><i>[system]</i><br/>A centralized web application that allows students to organize,<br/>view, and receive reminders for academic deadlines across multiple subjects"]:::system
-    
-    Email["<b>Email Service</b><br/><i>[external system]</i><br/>Sends email reminders for upcoming deadlines"]:::external
-    Push["<b>Push Notification Service</b><br/><i>[external system]</i><br/>Delivers browser/mobile push notifications"]:::external
-    Auth["<b>Google Authentication</b><br/><i>[external system]</i><br/>Provides OAuth 2.0 login for students"]:::external
+**Diagram Type:** C4 Level 1 — System Context  
+**Scope:** The Academic Deadline Tracker as a single system, all user roles, and all external systems  
+**Audience:** All stakeholders  
+**Risk Reduced:** Scope creep and missing external dependencies  
 
-    %% Relationships (Arrows)
-    Student -->|Registers, logs in, adds deadlines,<br/>views upcoming deadlines| System
-    Instructor -->|Provides subject details<br/>and deadline information| System
-    
-    System -->|Sends reminder<br/>emails via SMTP| Email
-    System -->|Sends push notifications via API| Push
-    System -->|Authenticates users via OAuth 2.0| Auth
+```mermaid
+C4Context
+    title C4 System Context Diagram — Academic Deadline Tracker
 
-    %% Layout adjustments (to keep top and bottom rows somewhat aligned)
-    subgraph Top [ ]
-        direction LR
-        Student
-        Instructor
-    end
-    
-    subgraph Bottom [ ]
-        direction LR
-        Email
-        Push
-        Auth
-    end
-    
-    style Top fill:none,stroke:none
-    style Bottom fill:none,stroke:none
-Compose
-Write to CAPSTONE 2 GROUPINGERS
+    Person(student, "Student", "College student who tracks academic deadlines")
+    Person(instructor, "Instructor", "Provides deadline information for subjects")
+
+    System(adt, "Academic Deadline Tracker", "A centralized web application that allows students to organize, view, and receive reminders for academic deadlines across multiple subjects")
+
+    System_Ext(emailService, "Email Service", "Sends email reminders for upcoming deadlines")
+    System_Ext(pushService, "Push Notification Service", "Delivers browser/mobile push notifications")
+    System_Ext(googleAuth, "Google Authentication", "Provides OAuth 2.0 login for students")
+
+    Rel(student, adt, "Registers, logs in, adds deadlines, views upcoming tasks, marks tasks complete")
+    Rel(instructor, adt, "Provides subject deadline information")
+    Rel(adt, emailService, "Sends reminder emails via SMTP")
+    Rel(adt, pushService, "Sends push notifications via API")
+    Rel(adt, googleAuth, "Authenticates users via OAuth 2.0")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
+
+**Key:**
+- **Person** = Human user role
+- **System** = Your MVP (one box)
+- **System_Ext** = External system your MVP depends on
+- **Rel** = Labelled relationship showing intent
+
+**Owner:** Vanessa Jhane G. Guda  
+**Reviewer:** Princess Mae G. Morata
